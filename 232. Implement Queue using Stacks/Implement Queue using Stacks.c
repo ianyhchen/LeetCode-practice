@@ -25,17 +25,18 @@ Stack* stackCreate(void){
     return newStack;
 }
 
-bool isEmpty(Stack* stack){
-    return (stack->next == NULL);
+bool isEmpty(Stack** stack){
+    return (*stack == NULL);
 }
-
-int stack_pop(Stack* stack){
+//Stack **stack:the original node of the stack has to be changed in the function 
+//then it is passed to the function by reference that is by using a pointer to it.
+int stack_pop(Stack** stack){
     int value;
     Stack *temp = NULL;
     if(!isEmpty(stack)){       
-        temp = stack->next;
+        temp = *stack;
         value = temp->data;
-        stack->next = stack->next->next;
+        *stack = temp->next;
         free(temp);           
     }    
     else{
@@ -46,7 +47,7 @@ int stack_pop(Stack* stack){
     return value;
 }
 
-void stack_push(Stack* stack, int new_data){
+void stack_push(Stack** stack, int new_data){
     Stack *newnode = (Stack*)malloc(sizeof(Stack));
     if(newnode ==NULL){
         printf("Stack overflow \n");
@@ -54,15 +55,15 @@ void stack_push(Stack* stack, int new_data){
         exit(0);
     }
     newnode->data = new_data;
-    newnode->next = stack->next;
-    stack->next = newnode;
+    newnode->next = *stack;
+    *stack = newnode;
     //printf("push %d\n",stack->next->data);
 }
-int stack_top(Stack *stack)
+int stack_top(Stack **stack)
 {
-    if(!isEmpty(stack))
+    if(!isEmpty(*stack))
     {
-        return stack->next->data;
+        return (*stack)->data;
     }
 
     return -1;
@@ -101,7 +102,7 @@ MyQueue* myQueueCreate(int maxSize) {
 
 /** Push element x to the back of queue. */
 void myQueuePush(MyQueue* obj, int x) {
-    stack_push(obj->stack1, x); //push the new element at the top of stack1
+    stack_push(&obj->stack1, x); //push the new element at the top of stack1
     //show_stack(obj);
 }
 
@@ -117,12 +118,12 @@ int myQueuePop(MyQueue* obj) {
     //thus,the oldest element in stack1 will be at the top of stack2) 
     else if(isEmpty(obj->stack2)){ 
         while(!isEmpty(obj->stack1)){           
-            temp_data = stack_pop(obj->stack1);
-            stack_push(obj->stack2, temp_data);            
+            temp_data = stack_pop(&obj->stack1);
+            stack_push(&obj->stack2, temp_data);            
         }
     }
     //pop the element at the top of stack2,
-    temp_data = stack_pop(obj->stack2);
+    temp_data = stack_pop(&obj->stack2);
     return temp_data;
 }
 
@@ -136,11 +137,11 @@ int myQueuePeek(MyQueue* obj) {
     }
     else if(isEmpty(obj->stack2)){              
         while(!isEmpty(obj->stack1)){           
-            temp_data = stack_pop(obj->stack1);
-            stack_push(obj->stack2, temp_data);            
+            temp_data = stack_pop(&obj->stack1);
+            stack_push(&obj->stack2, temp_data);            
         }
     }
-    temp_data = stack_top(obj->stack2);
+    temp_data = stack_top(&obj->stack2);
     //printf("%d\n",temp_data);
     return temp_data;
 }
