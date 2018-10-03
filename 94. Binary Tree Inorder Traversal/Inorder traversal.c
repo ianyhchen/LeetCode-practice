@@ -35,15 +35,19 @@ int* inorderTraversal(struct TreeNode* root, int* returnSize) {
 int* inorderTraversal(struct TreeNode* root, int* returnSize) {
     int* result = NULL;
     *returnSize = 0;
+    //Create an empty stack 
     struct TreeNode** stack = (struct TreeNode**)malloc(sizeof(struct TreeNode*));
-    int stack_length = 0;
+    int stack_length = 0;    
     while(stack_length > 0 || root != NULL){
         if(root){
+            //Push the current node to stack and set root = root->left until root is NULL
             stack = (struct TreeNode**)realloc(stack,sizeof(struct TreeNode*)*stack_length+1 );
             stack[stack_length++] = root;
             root = root->left;
         }
         else{
+            // If current is NULL and stack is not empty then 
+            //pop item from stack
             root = stack[--stack_length];
             result = (int*)realloc(result,sizeof(int)*(*returnSize+1));
             result[*returnSize] = root->val;
