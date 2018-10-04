@@ -15,7 +15,7 @@ int maxDepth(struct TreeNode* root) {
     return 1+(ldepth > rdepth? ldepth:rdepth);
 }
 bool isBalanced(struct TreeNode* root) {
-    if(root == NULL || root->left == NULL && root->right == NULL ){
+    if(root == NULL ){
         return true;
     }
     int left_depth = maxDepth(root->left);
