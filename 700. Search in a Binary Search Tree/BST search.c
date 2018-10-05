@@ -7,14 +7,10 @@
  * };
  */
 struct TreeNode* searchBST(struct TreeNode* root, int val) {
-    if(root == NULL){
-        return NULL;
-    }
-    //printf("root val: %d\n",root->val);
-    if(root->val == val){
-        //printf("same\n");
+    if(root == NULL || root->val == val){
         return root;
     }
+    //printf("root val: %d\n",root->val);   
     if(root->val < val){
         return searchBST(root->right, val);
     }
