@@ -6,7 +6,8 @@ class Solution {
         }
         int left = 0, right = nums.length - 1;
         while(left <= right){
-            int middle = (left + right) / 2;            
+            //Prevent (right+ left) overflow
+            int middle = left + (right - left) / 2;            
             if(target > nums[middle]){
                 left = middle +1 ;
             }
