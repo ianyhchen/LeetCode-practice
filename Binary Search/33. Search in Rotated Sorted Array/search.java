@@ -9,7 +9,7 @@ class Solution {
             //Separate two situation
             if((nums[mid] < nums[left])){
                 // 6,7,0,1,2,3,4,5
-                if((target < nums[mid]) || (target >= nums[left])){ 
+                if((target < nums[mid]) || (target >= nums[left])){ //left part unsorted
                     right = mid - 1;
                 }
                 else{                                                                  
@@ -18,7 +18,7 @@ class Solution {
             }
             else{   //(nums[mid] > nums[left])
                 // 2,3,4,5,6,7,0,1
-                if((target > nums[mid]) || (target < nums[left])){
+                if((target > nums[mid]) || (target < nums[left])){  // right part unsorted
                     left = mid + 1;                    
                 }
                 else{
